@@ -95,7 +95,8 @@ func unify(obj reflect.Value, c *Config) {
 		}
 	case reflect.Struct:
 		for i := 0; i < obj.NumField(); i++ {
-			if !obj.Type().Field(i).IsExported() {
+			if obj.Type().Field(i).PkgPath != "" {
+				// Not exported.
 				continue
 			}
 			unify(obj.Field(i), c)
